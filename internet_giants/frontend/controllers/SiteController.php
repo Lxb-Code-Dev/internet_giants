@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Team:Internet-giants, NKU
+ * Coding by liuxubo , 2021/11/21
+ * This is the main controller
+ */
+
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
@@ -20,6 +27,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    public $layout = "main_layout";
     /**
      * {@inheritdoc}
      */
@@ -31,7 +39,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'hsz'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -84,6 +92,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = "login_layout";
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -256,5 +265,65 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    /**
+     * display teamwork
+     */
+    public function actionWorkteam(){
+        // return $this->render('workteam');
+        $workteams = [
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA'],
+        ];
+        return $this->render('workteam', ['workteams' => $workteams]);
+    }
+    /**
+     * display lxb-work
+     */
+    public function actionWorklxb(){
+        $singlework = [
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA'],
+        ];
+        return $this->render('worklxb', ['singlework' => $singlework]);
+    }
+     
+    /**
+     * display zyl-work
+     */
+    public function actionWorkzyl(){
+        $singlework = [
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1YzDEqgFUzMgWef76TdKLgQ'],
+        ];
+        return $this->render('workzyl', ['singlework' => $singlework]);
+    }
+    /**
+     * display msy-work
+     */
+    public function actionWorkmsy(){
+        $singlework = [
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/15dwGwE7_ADMKwLbVeXV1tA'],
+        ];
+        return $this->render('workmsy', ['singlework' => $singlework]);
+    }
+    /**
+     * display wwr-work
+     */
+    public function actionWorkwwr(){
+        $singlework = [
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1X4sHfoaDjpLTXyqHZIAzRw'],
+        ];
+        return $this->render('workwwr', ['singlework' => $singlework]);
+    }
+    
+
+    /**
+     * display map
+     */
+    public function actionMap(){
+        return $this->render('map');
+    }
+
+    public function actionHsz(){
+        return $this->render('hsznews');
     }
 }
