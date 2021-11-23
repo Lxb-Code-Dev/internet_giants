@@ -1,12 +1,9 @@
 <?php
-/**
-*  Team: Internet_Giants, NKU
-*  Coding by 
-*/
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use frontend\assets\AppAsset;
+use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Nav;
@@ -26,8 +23,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title>Internet_Giants</title>
-    <!-- <title><?= Html::encode($this->title) ?></title> -->
+    <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -184,8 +180,8 @@ AppAsset::register($this);
     <!-- Start: Header -->
     <header class="navbar navbar-fixed-top navbar-shadow">
       <div class="navbar-branding">
-        <a class="navbar-brand" href="index.php">
-          <b>疫情</b>物资
+        <a class="navbar-brand" href="dashboard.html">
+          <b>管理</b>后台
         </a>
         <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
       </div>
@@ -210,10 +206,8 @@ AppAsset::register($this);
         </li>
         <li class="dropdown menu-merge">
           <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-          	<img src="../web/statics/assets/img/avatars/6.jpg" alt="avatar" class="mw30 br64">
-            <span class="hidden-xs pl15">
-            <?php  if(!Yii::$app->user->isGuest)
-              echo Yii::$app->user->identity->username ?> </span>
+          	<img src="../statics/assets/img/avatars/1.jpg" alt="avatar" class="mw30 br64">
+          	<span class="hidden-xs pl15"> <?= Yii::$app->user->identity->username ?> </span>
             <span class="caret caret-tp hidden-xs"></span>
           </a>
           
@@ -261,14 +255,13 @@ AppAsset::register($this);
           <div class="sidebar-widget author-widget">
             <div class="media">
               <a class="media-left" href="#">
-                <img src="assets/img/avatars/6.jpg" class="img-responsive">
+                <img src="../statics/assets/img/avatars/3.jpg" class="img-responsive">
               </a>
               <div class="media-body">
                 <div class="media-links">
-                <?php  if(!Yii::$app->user->isGuest)
-              echo Yii::$app->user->identity->username ?> <a href="<?php echo Url::to(['site/logout']) ?>" data-method="post">登出 </a>
+                   <a href="#" class="sidebar-menu-toggle">用户菜单-</a> <a href="<?php echo Url::to(['site/logout']) ?>" data-method="post">登出 </a>
                 </div>
-                <div class="media-author"> </div>
+                <div class="media-author"><?= Yii::$app->user->identity->username ?> </div>
               </div>
             </div>
           </div>
@@ -299,81 +292,97 @@ AppAsset::register($this);
         </header>
         <!-- End: Sidebar Header -->
 
-           <!-- Start: Sidebar Menu -->
-           <ul class="nav sidebar-menu">
+        <!-- Start: Sidebar Menu -->
+        <ul class="nav sidebar-menu">
+         
+          <li class="sidebar-label pt15">信息管理</li>
+          <li>
+            <a class="accordion-toggle" href="<?php echo Url::to(['department/index']) ?>">
+              <span class="glyphicon glyphicon-fire"></span>
+              <span class="sidebar-title">部门管理</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+              <li>
+                <a href="<?php echo Url::to(['department/index']) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 部门列表</a>
+              </li>
+              <li>
+                <a href="<?php echo Url::to(['department/create']) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 新建部门</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="accordion-toggle" href="<?php echo Url::to(['batch/index']) ?>">
+              <span class="glyphicon glyphicon-fire"></span>
+              <span class="sidebar-title">批次管理</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+              <li>
+                <a href="<?php echo Url::to(['batch/index']) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 批次列表</a>
+              </li>
+              <li>
+                <a href="<?php echo Url::to(['batch/create']) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 新建批次</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="accordion-toggle" href="<?php echo Url::to(['level-index/index']) ?>">
+              <span class="glyphicon glyphicon-fire"></span>
+              <span class="sidebar-title">等级评估管理</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+              <li>
+                <a href="<?php echo Url::to(['level-index/index','LevelIndexSearch[father_id]'=>0]) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 数据列表</a>
+              </li>
+              <li>
+                <a href="<?php echo Url::to(['level-index/create']) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 录入数据</a>
+              </li>
 
-           <li class="sidebar-label pt15">信息管理</li>
-         
-          
-         <li>
-             <li>
-               <a href="index.php?r=dxyarea">
-                 <span class="glyphicon glyphicon-fire"></span> 留言弹幕</a>
-             </li>
-         </li>
-         
-       <li>
-             <li>
-               <a class="accordion-toggle" href="index.php?r=contactme/create">
-                 <span class="glyphicon glyphicon-fire"></span> 用户留言</a>
-             </li>
-       </li>
-   
-         
-         <li class="sidebar-label pt15">作业展示</li>
-         <li>
-           <a class="accordion-toggle" href="<?php echo Url::to(['site/workteam']) ?>">
-             <span class="glyphicon glyphicon-book"></span>
-             <span class="sidebar-title">个人作业</span>
-           </a>
-           <ul class="nav sub-nav">
-             <li>
-               <a href="<?php echo Url::to(['site/worklxb']) ?>">
-                 <span class="glyphicon glyphicon-flag"></span> 刘旭博</a>
-             </li>
-             <li>
-               <a href="<?php echo Url::to(['site/workzyl']) ?>">
-                 <span class="glyphicon glyphicon-flag"></span> 赵一林</a>
-             </li>
-             <li>
-               <a href="<?php echo Url::to(['site/workmsy']) ?>">
-                 <span class="glyphicon glyphicon-flag"></span> 马思远</a>
-             </li>
-             <li>
-               <a href="<?php echo Url::to(['site/workwwr']) ?>">
-                 <span class="glyphicon glyphicon-flag"></span> 王文蕊</a>
-             </li>
-
-           </ul>
-         </li>
-         <li>
+              <!-- <li>
+                <a href="<?php echo Url::to(['input/upload']) ?>">
+                  <span class="glyphicon glyphicon-book"></span> 文件上传</a>
+              </li> -->
+            </ul>
+          </li>
       
-             <li>
-               <a href="<?php echo Url::to(['site/workteam']) ?>">
-                 <span class="glyphicon glyphicon-saved"></span> 团队作业</a>
-             </li>
-             
-         </li>
-
-
-         <li class="sidebar-label pt15">论坛管理</li>
-         <li>
-           </a>
-             <li>
-               <a href="<?php echo Url::to(['site/article']) ?>">
-                 <span class="glyphicon glyphicon-map-marker"></span> 疫情文章查看</a>
-             </li>
-             <li>
-               <a href="<?php echo Url::to(['site/hsz']) ?>">
-                 <span class="glyphicon glyphicon-fire"></span> 疫情文章发布</a>
-             </li>
-         </li>
-
-     
-
 
          
-          
+          <!-- sidebar progress bars -->
+          <li class="sidebar-label pt25 pb10">系统状态</li>
+          <li class="sidebar-stat">
+            <a href="#projectOne" class="fs11">
+              <span class="fa fa-inbox text-info"></span>
+              <span class="sidebar-title text-muted">待定1</span>
+              <span class="pull-right mr20 text-muted">35%</span>
+              <div class="progress progress-bar-xs mh20 mb10">
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+                  <span class="sr-only">35% Complete</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="sidebar-stat">
+            <a href="#projectOne" class="fs11">
+              <span class="fa fa-dropbox text-warning"></span>
+              <span class="sidebar-title text-muted">待定2</span>
+              <span class="pull-right mr20 text-muted">58%</span>
+              <div class="progress progress-bar-xs mh20">
+                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 58%">
+                  <span class="sr-only">58% Complete</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- End: Sidebar Menu -->
 
 	      <!-- Start: Sidebar Collapse Button -->
 	      <div class="sidebar-toggle-mini">

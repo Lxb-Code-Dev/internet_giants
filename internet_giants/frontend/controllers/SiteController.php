@@ -326,4 +326,22 @@ class SiteController extends Controller
     public function actionHsz(){
         return $this->render('hsznews');
     }
+    
+
+    public function actionArticle()
+    {
+        $model = new \app\models\IgArticleArticle(['scenario' => 'article_input']);
+    
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+    
+        return $this->render('article', [
+            'model' => $model,
+        ]);
+    }
+
 }
