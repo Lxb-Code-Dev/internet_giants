@@ -1,17 +1,22 @@
 <?php
 namespace backend\controllers;
-
+/*
+**author : Liuxubo 1911440
+**Date : 2021/11/21
+**descrption :
+*/
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+    public $layout="main";
     /**
      * {@inheritdoc}
      */
@@ -70,16 +75,13 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $this->layout="main_layout";
+            return $this->render('index');
         } else {
-            $model->password = '';
-
+            $model->us_password = '';
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -91,10 +93,19 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionLogout()
+    public function actionIglogout()
     {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
+        $session = Yii::$app->session;
+        $session->open();
+        $session->removeAll();
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            $model->us_password = '';
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 }

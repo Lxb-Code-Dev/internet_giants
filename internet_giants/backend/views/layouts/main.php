@@ -29,7 +29,8 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        //'brandLabel' => Yii::$app->name,
+        'brandLabel' =>  "疫情论坛后台登录",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -48,7 +49,17 @@ AppAsset::register($this);
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
-            . '</li>';
+            . '</li>'
+            // . '<li>'
+            // .Html::beginForm(['/tb-demand-goods/index'], 'post')
+            // . Html::submitButton(
+            //     'Demands',
+            //     ['class' => 'btn btn-link demands']
+            // )
+            // . Html::endForm()
+            // .'</li>'
+            ;
+        $menuItems[] = ['label' =>'Demand', 'url' => ['/site/demand']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
