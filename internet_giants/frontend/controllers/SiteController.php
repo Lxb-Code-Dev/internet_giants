@@ -24,6 +24,7 @@ use frontend\models\ContactForm;
 use frontend\models\ArticleForm;
 use frontend\models\MessageForm;
 use  yii\web\Session;
+use frontend\models\IgArticleArticle;
 
 /**
  * Site controller
@@ -85,7 +86,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = IgArticleArticle::find()->all();
+        return $this->render('index',['model'=>$model]);
     }
 
     /**

@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1>ZJT(1812326)</h1>
 
     <p>
-        所属成员：zjt ,NKU
+        所属成员：王文蕊
     </p>
     <br/>
     <table class="table table-bordered table-hover">

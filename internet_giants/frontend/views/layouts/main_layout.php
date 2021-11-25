@@ -274,8 +274,7 @@ AppAsset::register($this);
               </a>
               <div class="media-body">
                 <div class="media-links">
-                <?php  if(!Yii::$app->user->isGuest)
-              echo Yii::$app->user->identity->username ?> <a href="<?php echo Url::to(['site/logout']) ?>" data-method="post">登出 </a>
+               
                 </div>
                 <div class="media-author"> </div>
               </div>

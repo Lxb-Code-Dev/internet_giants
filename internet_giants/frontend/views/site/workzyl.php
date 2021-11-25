@@ -15,7 +15,7 @@ $this->title = '个人作业';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
-    <h1>SYD(1811425)</h1>
+    <h1>赵一林</h1>
 
     <p>
         所属成员：syd ,NKU

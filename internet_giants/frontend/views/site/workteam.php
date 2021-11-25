@@ -35,36 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
             <td> on5i</td>
         </tr>
-        <tr>
-            <td><?=$v['name']?></td>
-            <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
-            <td> on5i</td>
-        </tr>
-        <tr>
-            <td><?=$v['name']?></td>
-            <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
-            <td> on5i</td>
-        </tr>
-        <tr>
-            <td><?=$v['name']?></td>
-            <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
-            <td> on5i</td>
-        </tr>
-        <tr>
-            <td><?=$v['name']?></td>
-            <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
-            <td> on5i</td>
-        </tr>
-        <tr>
-            <td><?=$v['name']?></td>
-            <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
-            <td> on5i</td>
-        </tr>
-        <tr>
-            <td><?=$v['name']?></td>
-            <td> <a href=" https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA"><?php echo $v['namecontent']?></a></td>
-            <td> on5i</td>
-        </tr>
     <?php endforeach;?>
     </tbody>
     </table>
