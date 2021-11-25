@@ -1,20 +1,27 @@
 <?php
 namespace frontend\models;
 
+/*
+
+**author : Liuxubo 1911440
+**Date : 2021/11/21
+
+*/
+
 use Yii;
 use yii\base\Model;
-use common\models\User;
+
 
 /**
  * Signup form
  */
 class SignupForm extends Model
 {
-    public $username;
-    public $email;
-    public $password;
-    
-    public $verifycode;
+    public $us_id;
+    public $us_name;
+    public $us_mail;
+    public $us_password;
+   
 
     /**
      * {@inheritdoc}
@@ -22,21 +29,24 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['us_id', 'trim'],
+            ['us_id','required'],
+            ['us_id', 'unique', 'targetClass' => '\frontend\models\IgUserUser', 'message' => 'This username has already been taken.'],
+            ['us_id', 'string',  'max' => 255],
 
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['us_name', 'required'],
+            ['us_name', 'string', 'min' => 2, 'max' => 255],
+            
+            ['us_mail', 'trim'],
+            ['us_mail', 'required'],
+            ['us_mail', 'email'],
+            ['us_mail', 'string', 'max' => 255],
+            ['us_mail', 'unique', 'targetClass' => '\frontend\models\IgUserUser', 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['us_password', 'required'],
+            ['us_password', 'string', 'min' => 3],
 
-            ['verifycode','captcha'],
+         
         ];
     }
 
@@ -51,32 +61,15 @@ class SignupForm extends Model
             return null;
         }
         
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
+        $user = new IgUserUser();
+        $user->us_id = $this->us_id;
+        $user->us_name = $this->us_name;
+        $user->us_mail = $this->us_mail;
+        $user->us_password=$this->us_password;
+        $user->us_contribution=0;
+        return $user->save();
 
     }
 
-    /**
-     * Sends confirmation email to user
-     * @param User $user user model to with email should be send
-     * @return bool whether the email was sent
-     */
-    protected function sendEmail($user)
-    {
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
-    }
+    
 }

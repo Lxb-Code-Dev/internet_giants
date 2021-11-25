@@ -16,11 +16,14 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\ArticleForm;
+use frontend\models\MessageForm;
+use  yii\web\Session;
 
 /**
  * Site controller
@@ -92,17 +95,20 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this->layout = "login_layout";
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        $this->layout = "main";
+        $session = Yii::$app->session;
+        $session->open();
+        
+        if ($session->get('us_id')) {
+            //echo $session->get('us_id');
+            return $this->goBack();
         }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            $model->password = '';
-
+            $model->us_password = '';
+            $model->us_id=$session->get('us_id');
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -114,11 +120,21 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogout()
+    public function actionIglogout()
     {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
+        $this->layout = "main";
+        $session = Yii::$app->session;
+        $session->open();
+        $session->removeAll();
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            $model->us_password = '';
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -126,23 +142,19 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionContact()
+    public function actionLeaveamessage()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-            }
-
-            return $this->refresh();
+        $model = new MessageForm();
+        if ($model->load(Yii::$app->request->post()) && $model->leavemessage()) {
+             $this->goBack();
         } else {
-            return $this->render('contact', [
+            return $this->render('leaveamessage', [
                 'model' => $model,
             ]);
         }
     }
+
+
 
     /**
      * Displays about page.
@@ -161,6 +173,7 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout = "main";
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
@@ -221,51 +234,8 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Verify email address
-     *
-     * @param string $token
-     * @throws BadRequestHttpException
-     * @return yii\web\Response
-     */
-    public function actionVerifyEmail($token)
-    {
-        try {
-            $model = new VerifyEmailForm($token);
-        } catch (InvalidArgumentException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-        if ($user = $model->verifyEmail()) {
-            if (Yii::$app->user->login($user)) {
-                Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
-                return $this->goHome();
-            }
-        }
-
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
-        return $this->goHome();
-    }
-
-    /**
-     * Resend verification email
-     *
-     * @return mixed
-     */
-    public function actionResendVerificationEmail()
-    {
-        $model = new ResendVerificationEmailForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
-            }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
-        }
-
-        return $this->render('resendVerificationEmail', [
-            'model' => $model
-        ]);
-    }
+   
+    
 
     /**
      * display teamwork
@@ -319,24 +289,29 @@ class SiteController extends Controller
     /**
      * display map
      */
-    public function actionMap(){
-        return $this->render('map');
-    }
-
-    public function actionHsz(){
-        return $this->render('hsznews');
-    }
-    
+   
 
     public function actionArticle()
     {
-        $model = new \app\models\IgArticleArticle(['scenario' => 'article_input']);
+        
+        $model = new ArticleForm();
     
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->publish()) {
+            return $this->goBack();
+        }
+        
+        return $this->render('article', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionViewarticle()
+    {
+        $model = new CommentForm();
+    
+        if ($model->load(Yii::$app->request->post()) && $model->getArticle()) {
+            return $this->goBack();
         }
     
         return $this->render('article', [
@@ -345,3 +320,5 @@ class SiteController extends Controller
     }
 
 }
+
+    

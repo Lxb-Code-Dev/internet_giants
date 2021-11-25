@@ -31,7 +31,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['iglogout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -40,7 +40,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'iglogout' => ['post'],
                 ],
             ],
         ];
@@ -65,7 +65,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+       
+            $this->layout="main_layout";
+            return $this->render('index');
+        
     }
 
     /**
@@ -75,7 +78,14 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-
+        
+        $session = Yii::$app->session;
+        if($session->get('us_id'))
+        {
+            $session->removeAll();
+            $this->layout="main_layout";
+            return $this->render('index');
+        }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $this->layout="main_layout";
@@ -96,11 +106,11 @@ class SiteController extends Controller
     public function actionIglogout()
     {
         $session = Yii::$app->session;
-        $session->open();
         $session->removeAll();
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $this->layout="main_layout";
+            return $this->render('index');
         } else {
             $model->us_password = '';
             return $this->render('login', [
@@ -108,4 +118,9 @@ class SiteController extends Controller
             ]);
         }
     }
+
+
+   
+
+
 }

@@ -1,13 +1,17 @@
 <?php
 
-namespace app\controllers;
+namespace frontend\controllers;
 
 use Yii;
-use app\models\IgArticleArticle;
-use app\models\IgArticleArticleQuery;
+use frontend\models\IgArticleArticle;
+use frontend\models\IgArticleArticleSearch;
+use frontend\models\IgUserRead;
+use frontend\models\CommentForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\models\IgArticleComments;
+use yii\data\ActiveDataProvider;
 
 /**
  * ArticleController implements the CRUD actions for IgArticleArticle model.
@@ -17,6 +21,7 @@ class ArticleController extends Controller
     /**
      * {@inheritdoc}
      */
+    public  $layout = "main_layout";
     public function behaviors()
     {
         return [
@@ -35,7 +40,7 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new IgArticleArticleQuery();
+        $searchModel = new IgArticleArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -52,9 +57,46 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $model=new CommentForm();
+        //记录浏览记录
+        $model->increaseview($this->findModel($id));
+        //显示输出评论
+        $query=IgArticleComments::find()->where(['art_id'=>$this->findModel($id)->art_id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
         ]);
+        $mm=$this->findModel($id);
+        $mm->art_view_num=$mm->art_view_num+1;
+        $mm->save();
+        
+        $session = Yii::$app->session;
+        $session->open();
+        if(!IgUserRead::find()->andWhere(['art_id'=>$this->findModel($id)->art_id, 'us_id'=>$session->get('us_id')])->count())
+        {
+            $read=new IgUserRead();
+            $read->us_id=$session->get('us_id');
+            $read->art_id=$this->findModel($id)->art_id;
+            $read->save();
+        }
+        
+        
+        if ($model->load(Yii::$app->request->post()) && $model->leaveamessage($this->findModel($id)) ) {
+            $model->com_content='';
+       } else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'model1'=>$model,
+                'dataProvider'=>$dataProvider,
+            ]);
+       }
+
+       return $this->render('view', [
+        'model' => $this->findModel($id),
+        'model1'=>$model,
+        'dataProvider'=>$dataProvider,
+    ]);
+
+        
     }
 
     /**
@@ -85,14 +127,18 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->art_id]);
+        $session = Yii::$app->session;
+        $session->open();
+        if(IgArticleArticle::find()->where(['art_id'=>$id ])->one()->us_id==$session->get('us_id'))
+        {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->art_id]);
+            }
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['view', 'id' => $model->art_id]);
     }
 
     /**
@@ -104,8 +150,23 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
+        $session = Yii::$app->session;
+        $session->open();
+        if(IgArticleArticle::find()->where(['art_id'=>$id ])->one()->us_id==$session->get('us_id'))
+        {
+            $connection = Yii::$app->db;
+            //创建事务
+            $transaction = $connection->beginTransaction();
+            $connection ->createCommand()
+            ->delete('ig_article_viparticle', "art_id ='$id'")
+            ->execute();
+            $connection ->createCommand()
+            ->delete('ig_article_article', "art_id ='$id'")
+            ->execute();
+            $transaction->commit();
+            
+        }
         return $this->redirect(['index']);
     }
 

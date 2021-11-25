@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * author: Liuxubo 1911440
+ * date: 2021/11/24
+ * description: 搜索
+ */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -28,7 +32,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'art_content') ?>
 
-    <?php // echo $form->field($model, 'art_like') ?>
+  
 
     <?php // echo $form->field($model, 'art_com_num') ?>
 
@@ -36,7 +40,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        <!-- <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?> -->
     </div>
 
     <?php ActiveForm::end(); ?>

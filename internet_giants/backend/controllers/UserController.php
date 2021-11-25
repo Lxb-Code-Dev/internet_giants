@@ -5,7 +5,7 @@
 **Date : 2021/11/21
 **descrption :
 */
-namespace app\controllers;
+namespace backend\controllers;
 
 use Yii;
 use app\models\IgUserUser;
@@ -22,6 +22,7 @@ class UserController extends Controller
     /**
      * {@inheritdoc}
      */
+    public  $layout = "new_layout";
     public function behaviors()
     {
         return [
@@ -40,6 +41,11 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $session=Yii::$app->session;
+        if(!$session->get('us_id'))
+        {
+            return $this->goBack();
+        }
         $searchModel = new IgUserUserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -57,6 +63,11 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $session=Yii::$app->session;
+        if(!$session->get('us_id'))
+        {
+            return $this->goBack();
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -69,6 +80,11 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
+        $session=Yii::$app->session;
+        if(!$session->get('us_id'))
+        {
+            return $this->goBack();
+        }
         $model = new IgUserUser();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -89,6 +105,11 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        $session=Yii::$app->session;
+        if(!$session->get('us_id'))
+        {
+            return $this->goBack();
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -109,9 +130,19 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+       
+        $connection = Yii::$app->db;
+        //创建事务
+        $transaction = $connection->beginTransaction();
+        $connection ->createCommand()
+        ->delete('ig_user_vipuser', "us_id ='$id'")
+        ->execute();
+        $connection ->createCommand()
+        ->delete('ig_user_user', "us_id ='$id'")
+        ->execute();
+        $transaction->commit();
+    
+    return $this->redirect(['index']);
     }
 
     /**

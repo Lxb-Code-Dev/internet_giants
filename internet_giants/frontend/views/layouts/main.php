@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'djl',
+        'brandLabel' => '欢迎登录疫情论坛系统',
         //'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
@@ -38,8 +38,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => '疫情数据展示', 'url' => ['dxyarea/index']],
-        ['label' => 'Contactme', 'url' => ['contactme/create']],
+    
     ];
     if (Yii::$app->user->isGuest) {
 

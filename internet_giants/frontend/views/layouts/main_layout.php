@@ -1,7 +1,7 @@
 <?php
 /**
 *  Team: Internet_Giants, NKU
-*  Coding by 
+*  Coding by Liuxubo 1911440
 */
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -17,6 +17,7 @@ use common\widgets\Alert;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
+
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -185,7 +186,7 @@ AppAsset::register($this);
     <header class="navbar navbar-fixed-top navbar-shadow">
       <div class="navbar-branding">
         <a class="navbar-brand" href="index.php">
-          <b>疫情</b>物资
+          <b>疫情论坛系统</b>
         </a>
         <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
       </div>
@@ -199,9 +200,17 @@ AppAsset::register($this);
       </ul>
  <ul class="nav navbar-nav navbar-right">
 
+ <li class="hidden-xs">
+                     <a href="<?php echo Url::to(['site/login']) ?>" data-method="post">
+              <span class="fa fa-power-off pr5"></span> 登录 </a>
+        </li>
         <li class="hidden-xs">
-                     <a href="<?php echo Url::to(['site/logout']) ?>" data-method="post">
+                     <a href="<?php echo Url::to(['site/signup']) ?>" data-method="post">
+              <span class="fa fa-power-off pr5"></span> 注册 </a>
+              <li class="hidden-xs">
+                     <a href="<?php echo Url::to(['site/iglogout']) ?>" data-method="post">
               <span class="fa fa-power-off pr5"></span> 登出 </a>
+        </li>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -307,14 +316,14 @@ AppAsset::register($this);
           
          <li>
              <li>
-               <a href="index.php?r=dxyarea">
+               <a href="index.php?r=leaveamessage/index">
                  <span class="glyphicon glyphicon-fire"></span> 留言弹幕</a>
              </li>
          </li>
          
        <li>
              <li>
-               <a class="accordion-toggle" href="index.php?r=contactme/create">
+               <a href="<?php echo Url::to(['site/leaveamessage']) ?>">
                  <span class="glyphicon glyphicon-fire"></span> 用户留言</a>
              </li>
        </li>
@@ -360,11 +369,11 @@ AppAsset::register($this);
          <li>
            </a>
              <li>
-               <a href="<?php echo Url::to(['site/article']) ?>">
-                 <span class="glyphicon glyphicon-map-marker"></span> 疫情文章查看</a>
+               <a href="index.php?r=article">
+                 <span class="glyphicon glyphicon-map-marker"></span> 疫情文章管理</a>
              </li>
              <li>
-               <a href="<?php echo Url::to(['site/hsz']) ?>">
+               <a href="<?php echo Url::to(['site/article']) ?>">
                  <span class="glyphicon glyphicon-fire"></span> 疫情文章发布</a>
              </li>
          </li>
@@ -474,7 +483,8 @@ AppAsset::register($this);
 
       <!-- Begin: Content -->
       <section id="content" class="table-layout animated fadeIn">
-        <?= $content ?>
+      
+      <?= $content ?>
       
       </section>
       <!-- End: Content -->

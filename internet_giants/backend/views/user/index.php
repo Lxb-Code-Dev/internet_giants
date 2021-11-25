@@ -1,5 +1,9 @@
 <?php
-
+/**
+ *  author: Liuxubo 1911440
+ *  date: 2021/11/24
+ * 
+ *  */
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -14,11 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Ig User User', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,8 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'us_id',
             'us_name',
             'us_mail',
-            'us_password',
-            'us_contribution',
+           
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

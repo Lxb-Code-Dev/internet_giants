@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * author: Liuxubo 1911440
+ * date: 2021/11/24
+ * description: 文章更新页面，部分内容只读
+ */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,21 +16,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'art_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'art_id')->textInput(['maxlength' => true,'readonly' => true]) ?>
 
-    <?= $form->field($model, 'us_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'us_id')->textInput(['maxlength' => true,'readonly' => true]) ?>
 
-    <?= $form->field($model, 'art_view_num')->textInput() ?>
+    <?= $form->field($model, 'art_view_num')->textInput(['readonly' => true]) ?>
 
     <?= $form->field($model, 'art_title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'art_content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'art_content')->textarea(['rows' => 30]) ?>
 
-    <?= $form->field($model, 'art_like')->textInput() ?>
+    <?= $form->field($model, 'art_com_num')->textInput(['readonly' => true]) ?>
 
-    <?= $form->field($model, 'art_com_num')->textInput() ?>
-
-    <?= $form->field($model, 'art_rev_date')->textInput() ?>
+    <?= $form->field($model, 'art_rev_date')->textInput(['readonly' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

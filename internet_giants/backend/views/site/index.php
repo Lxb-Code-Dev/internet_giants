@@ -10,7 +10,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
-
+use app\models\IgUserUser;
+use app\models\IgArticleArticle;
+use app\models\IgArticleComments;
+use app\models\IgUserMessage;
 
 
 $this->title = '后台管理';
@@ -40,8 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
 										<span class="iconfont">&#xe606;</span>
 									</div>
 									<div class="right-text-con">
-										<p class="name">管理员数</p>
-										<p><span class="color-org">89</span></p>
+										<p class="name">用户数</p>
+										<p><span class="color-org">
+										<?php
+										$posts = IgUserUser::find()->count(); 
+										echo $posts[0];
+										?>
+										</span></p>
 									</div>
 								</a>
 							</li>
@@ -52,7 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
 									</div>
 									<div class="right-text-con">
 										<p class="name">文章数</p>
-										<p><span class="color-blue">189</span></p>
+										<p><span class="color-blue">
+										<?php
+										$posts = IgArticleArticle::find()->count(); 
+										echo $posts[0];
+										?>
+										</span></p>
 									</div>
 								</a>
 							</li>
@@ -63,7 +76,14 @@ $this->params['breadcrumbs'][] = $this->title;
 									</div>
 									<div class="right-text-con">
 										<p class="name">评论数</p>
-										<p><span class="color-green">221</span></p>
+										<p><span class="color-green">
+											<?php
+											
+											$sql='SELECT SUM(art_com_num) AS num FROM ig_article_article';
+											$posts =Yii::$app->db->createCommand($sql)->queryAll(); ; 
+											echo $posts[0]['num'];
+											?>
+										</span></p>
 									</div>
 								</a>
 							</li>
@@ -80,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<div class="panel-body clearfix">
 							<div class="col-md-2">
 								<p class="title">服务器环境</p>
-								<span class="info">Apache/2.4.4 (Win32) PHP/5.4.16</span>
+								<span class="info">Apache/2.4.51 (Win64) PHP/8.0.12</span>
 							</div>
 							<div class="col-md-2">
 								<p class="title">服务器IP地址</p>
@@ -92,15 +112,20 @@ $this->params['breadcrumbs'][] = $this->title;
 							</div>
 							<div class="col-md-2">
 								<p class="title"> PHP版本</p>
-								<span class="info">5.4.16</span>
+								<span class="info">8.0.12</span>
 							</div>
 							<div class="col-md-2">
 								<p class="title">数据库信息</p>
-								<span class="info">5.6.12-log </span>
+								<span class="info">8.0.23 </span>
 							</div>
 							<div class="col-md-2">
 								<p class="title">服务器当前时间</p>
-								<span class="info">2016-06-22 11:37:35</span>
+								<span class="info">
+								<?php
+									$datetime = new \DateTime;
+            						echo $datetime->format('Y-m-d');
+								?>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -115,48 +140,94 @@ $this->params['breadcrumbs'][] = $this->title;
 								  <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="http://static.h-ui.net/h-ui/images/ucnter/avatar-default.jpg"></i></a>
 								    <div class="comment-main">
 								      <header class="comment-header">
-								        <div class="comment-meta"><a class="comment-author" href="#">慕枫</a> 评论于
-								          <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time>
+								        <div class="comment-meta"><a class="comment-author" href="#">
+											<?php
+												$a= IgUserMessage::find()->orderBy('us1_id DESC')->all();
+												echo $a[0]['us1_name']; 
+											?>
+											
+										</a> 评论于
+										<?php
+												echo $a[0]['us1_date']; 
+										?>
+								        
 								        </div>
 								      </header>
 								      <div class="comment-body">
-								        <p><a href="#">@某人</a> 系统真不错！！！</p>
+								        <p><a href="#"></a> 
+										<?php
+												echo $a[0]['us1_content']; 
+										?>
+									</p>
 								      </div>
 								    </div>
 								  </li>
 								  <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="http://static.h-ui.net/h-ui/images/ucnter/avatar-default.jpg"></i></a>
 								    <div class="comment-main">
 								      <header class="comment-header">
-								        <div class="comment-meta"><a class="comment-author" href="#">慕枫</a> 评论于
-								          <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time>
+								        <div class="comment-meta"><a class="comment-author" href="#"><?php
+												echo $a[1]['us1_name']; 
+											?>
+											
+										</a> 评论于
+										<?php
+												echo $a[1]['us1_date']; 
+										?>
+								        
 								        </div>
 								      </header>
 								      <div class="comment-body">
-								        <p><a href="#">@某人</a> 系统真不错！！！</p>
+								        <p><a href="#"></a> 
+										<?php
+												echo $a[1]['us1_content']; 
+										?>
+									</p>
 								      </div>
 								    </div>
 								  </li>
 								   <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="http://static.h-ui.net/h-ui/images/ucnter/avatar-default.jpg"></i></a>
 								    <div class="comment-main">
 								      <header class="comment-header">
-								        <div class="comment-meta"><a class="comment-author" href="#">慕枫</a> 评论于
-								          <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time>
+								        <div class="comment-meta"><a class="comment-author" href="#"><?php
+												echo $a[2]['us1_name']; 
+											?>
+											
+										</a> 评论于
+										<?php
+												echo $a[2]['us1_date']; 
+										?>
+								        
 								        </div>
 								      </header>
 								      <div class="comment-body">
-								        <p><a href="#">@某人</a> 系统真不错！！！</p>
+								        <p><a href="#"></a> 
+										<?php
+												echo $a[2]['us1_content']; 
+										?>
+									</p>
 								      </div>
 								    </div>
 								  </li>
 								  <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="http://static.h-ui.net/h-ui/images/ucnter/avatar-default.jpg"></i></a>
 								    <div class="comment-main">
 								      <header class="comment-header">
-								        <div class="comment-meta"><a class="comment-author" href="#">慕枫</a> 评论于
-								          <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time>
+								        <div class="comment-meta"><a class="comment-author" href="#"><?php
+												echo $a[3]['us1_name']; 
+											?>
+											
+										</a> 评论于
+										<?php
+												echo $a[3]['us1_date']; 
+										?>
+								        
 								        </div>
 								      </header>
 								      <div class="comment-body">
-								        <p><a href="#">@某人</a> 系统真不错！！！</p>
+								        <p><a href="#"></a> 
+										<?php
+												echo $a[3]['us1_content']; 
+										?>
+									</p>
 								      </div>
 								    </div>
 								  </li>
@@ -168,19 +239,73 @@ $this->params['breadcrumbs'][] = $this->title;
 						</div>
 					</div>
 					<!--联系-->
-					<div class="panel panel-default contact-panel">
-						<div class="panel-header">联系我们</div>
-						<div class="panel-body">
-							<p>QQ：1227296769</p>
-							<p>E-mail:1227296769@qq.com</p>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
+
+		<script>
+			<?php
+				$datetime = new \DateTime;
+				$datetime1 = new \DateTime;
+				$datetime2 = new \DateTime;
+				$datetime3 = new \DateTime;
+				$datetime4 = new \DateTime;
+				$datetime5 = new \DateTime;
+				$datetime6 = new \DateTime;
+				$interval1 = new \DateInterval('P1D');
+				$interval2 = new \DateInterval('P2D');
+				$interval3 = new \DateInterval('P3D');
+				$interval4 = new \DateInterval('P4D');
+				$interval5 = new \DateInterval('P5D');
+				$interval6 = new \DateInterval('P6D');
+
+				
+				$date11=$datetime1->sub($interval6)->format('Y-m-d');
+				$date12=$datetime2->sub($interval5)->format('Y-m-d');
+				$date13=$datetime3->sub($interval4)->format('Y-m-d');
+				$date14=$datetime4->sub($interval3)->format('Y-m-d');
+				$date15=$datetime5->sub($interval2)->format('Y-m-d');
+				$date16=$datetime6->sub($interval1)->format('Y-m-d');
+				$date17=$datetime->format('Y-m-d');
+				
+			?>
+				var date1="<?php echo $date11;?>"
+				var date2="<?php echo $date12;?>"
+				var date3="<?php echo $date13;?>"
+				var date4="<?php echo $date14;?>"
+				var date5="<?php echo $date15;?>"
+				var date6="<?php echo $date16;?>"
+				var date7="<?php echo $date17;?>"
+				var art1="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date11' ")->queryAll()[0]['num'];?>"
+				var art2="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date12'")->queryAll()[0]['num'];?>"
+				var art3="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date13'")->queryAll()[0]['num'];?>"
+				var art4="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date14'")->queryAll()[0]['num']?>"
+				var art5="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date15'")->queryAll()[0]['num']?>"
+				var art6="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date16'")->queryAll()[0]['num']?>"
+				var art7="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_article WHERE art_rev_date<='$date17'")->queryAll()[0]['num']?>"
+				var com1="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date11'")->queryAll()[0]['num']?>"
+				var com2="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date12'")->queryAll()[0]['num']?>"
+				var com3="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date13'")->queryAll()[0]['num']?>"
+				var com4="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date14'")->queryAll()[0]['num']?>"
+				var com5="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date15'")->queryAll()[0]['num']?>"
+				var com6="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date16'")->queryAll()[0]['num']?>"
+				var com7="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_article_comments WHERE com_date<='$date17'")->queryAll()[0]['num']?>"
+				var mes1="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date11'")->queryAll()[0]['num']?>"
+				var mes2="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date12'")->queryAll()[0]['num']?>"
+				var mes3="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date13'")->queryAll()[0]['num']?>"
+				var mes4="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date14'")->queryAll()[0]['num']?>"
+				var mes5="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date15'")->queryAll()[0]['num']?>"
+				var mes6="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date16'")->queryAll()[0]['num']?>"
+				var mes7="<?php echo Yii::$app->db->createCommand("SELECT COUNT(*) AS num FROM ig_user_message WHERE us1_date<='$date17'")->queryAll()[0]['num']?>"
+			</script>  
+
+
 		<script src="../static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../static/admin/lib/echarts/echarts.js"></script>
 		<script type="text/javascript">
+			
+			
 			layui.use(['layer','jquery'], function(){
 				var layer 	= layui.layer;
 				var $=layui.jquery;
@@ -216,7 +341,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						        trigger: "axis"
 						    },
 						    legend: {
-						        data: ["会员", "文章", "评论"],
+						        data: ["文章", "评论","留言"],
 						        selectedMode: false,
 						    },
 						    toolbox: {
@@ -246,7 +371,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						        {
 						            type: "category",
 						            boundaryGap: false,
-						            data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+						            data: [date1, date2, date3, date4, date5, date6, date7]
+									
 						        }
 						    ],
 						    yAxis: [
@@ -259,19 +385,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						        x: 50
 						    },
 						    series: [
-						        {
-						            name: "会员",
-						            type: "line",
-						            smooth: true,
-						            itemStyle: {
-						                normal: {
-						                    areaStyle: {
-						                        type: "default"
-						                    }
-						                }
-						            },
-						            data: [10, 12, 21, 54, 260, 830, 710]
-						        },
+						       
 						        {
 						            name: "文章",
 						            type: "line",
@@ -283,7 +397,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						                    }
 						                }
 						            },
-						            data: [30, 182, 434, 791, 390, 30, 10]
+						            data: [art1, art2, art3, art4, art5, art6, art7]
 						        },
 						        {
 						            name: "评论",
@@ -297,8 +411,21 @@ $this->params['breadcrumbs'][] = $this->title;
 						                    color: "rgb(110, 211, 199)"
 						                }
 						            },
-						            data: [1320, 1132, 601, 234, 120, 90, 20]
-						        }
+						            data: [com1, com2, com3, com4, com5, com6, com7]
+						        },
+								{
+						            name: "留言",
+						            type: "line",
+						            smooth: true,
+						            itemStyle: {
+						                normal: {
+						                    areaStyle: {
+						                        type: "default"
+						                    }
+						                }
+						            },
+						            data: [mes1, mes2, mes3, mes4, mes5, mes6, mes7]
+						        },
 						    ]
 						}
 				        );
