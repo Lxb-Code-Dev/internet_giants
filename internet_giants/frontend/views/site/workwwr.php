@@ -15,11 +15,9 @@ $this->title = '个人作业';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
-    <h1>ZJT(1812326)</h1>
+    <h1>王文蕊</h1>
 
-    <p>
-        所属成员：王文蕊
-    </p>
+ 
     <br/>
     <table class="table table-bordered table-hover">
     <thead>
@@ -33,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($singlework as $v) :?>
         <tr>
             <td><?=$v['name']?></td>
-            <td> <a href="https://pan.baidu.com/s/1X4sHfoaDjpLTXyqHZIAzRw"><?php echo $v['namecontent']?></a></td>
-            <td> zzhl</td>
+            <!-- <td> <a href=""><?php echo $v['namecontent']?></a></td> -->
+            <td> #</td>
         </tr>
     <?php endforeach;?>
     </tbody>

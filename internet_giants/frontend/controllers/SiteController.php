@@ -25,6 +25,7 @@ use frontend\models\ArticleForm;
 use frontend\models\MessageForm;
 use  yii\web\Session;
 use frontend\models\IgArticleArticle;
+use frontend\models\IgArticleViparticle;
 
 /**
  * Site controller
@@ -86,7 +87,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = IgArticleArticle::find()->all();
+        $model = IgArticleViparticle::find()->all();
         return $this->render('index',['model'=>$model]);
     }
 

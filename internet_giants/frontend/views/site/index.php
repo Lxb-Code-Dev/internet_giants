@@ -1,7 +1,7 @@
 <?php
 /**
 *  Team: IG, NKU
-*  Coding by Zhaoyilin, 2021/11/21
+*  Coding by Zhaoyilin,Liuxubo  2021/11/21
 */
 /* @var $this yii\web\View */
 
@@ -10,7 +10,7 @@ use frontend\assets;
 use frontend\assets\AppAsset;
 use yii\helpers\Html;
 use frontend\models\IgArticleComments;
-use frontend\models\IgUserUser;
+use frontend\models\IgUserVipuser;
 $this->title = 'Welcome';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <li>
                 <i class="fa fa-compass"></i>&nbsp &nbsp 
                 <b>Website:</b>
-                <a href="https://github.com/Lxb-Code-Dev/internet_giants"> 这里放上github链接</a>
+                <a href="https://github.com/Lxb-Code-Dev/internet_giants"> Github链接</a>
               </li>
           </ul>
 
@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <div class="panel-heading text-center">
                 <span class="panel-title">';
                 echo $string;
-                $user = IgUserUser::findOne($article->us_id);    
+                $user = IgUserVipuser::findOne($article->us_id);    
                 echo Html::encode($article->art_title).' By '.Html::encode($user->us_name).'('.Html::encode($user->us_id).'):('.Html::encode($article->art_rev_date).')';
                 $string='</span>
                 </div>
