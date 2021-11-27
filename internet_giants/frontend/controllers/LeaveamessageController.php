@@ -68,7 +68,7 @@ class LeaveamessageController extends Controller
         $model=IgUserMessage::findone(1);
         
         $num=IgArticleComments::find()->count();
-        echo $model->us1_content;
+        //echo $model->us1_content;
         return $this->render('index');
     }
 };

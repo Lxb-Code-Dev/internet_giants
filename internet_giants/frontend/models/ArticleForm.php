@@ -21,9 +21,6 @@ class ArticleForm extends Model
     public $art_title;
     public $cate_name;
     public $art_content;
-    
-       
-
     /**
      * {@inheritdoc}
      */
@@ -153,18 +150,12 @@ class ArticleForm extends Model
         }
         $cate->cate_name=$this->cate_name;
         $cate->save();
-
         $IAC=new IgArticleClassify();
         $IAC->art_id=$this_id;
         $IAC->cate_id=$cate->cate_id;
-
         $IAC->save();
-
-        
-        
         return true;
-    
-        
+
     }
 
     

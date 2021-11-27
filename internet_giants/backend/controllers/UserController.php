@@ -135,6 +135,12 @@ class UserController extends Controller
         //创建事务
         $transaction = $connection->beginTransaction();
         $connection ->createCommand()
+        ->delete('ig_user_publishvip', "us_id ='$id'")
+        ->execute();
+        $connection ->createCommand()
+        ->delete('ig_article_viparticle', "us_id ='$id'")
+        ->execute();
+        $connection ->createCommand()
         ->delete('ig_user_vipuser', "us_id ='$id'")
         ->execute();
         $connection ->createCommand()
