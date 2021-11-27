@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($singlework as $v) :?>
         <tr>
             <td><?=$v['name']?></td>
-            <!-- <td> <a href=" #"><?php echo $v['namecontent']?></a></td> -->
-            <td> #</td>
+            <td> <a href="https://pan.baidu.com/s/17DyLCl_BGniqwEXDufeNjA"><?php echo $v['namecontent']?></a></td>
+            <td> xred</td>
         </tr>
     <?php endforeach;?>
     </tbody>

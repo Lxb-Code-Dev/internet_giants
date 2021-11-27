@@ -1,8 +1,9 @@
 <?php
 /**
-*  Team: Internet_Giants, NKU
-*  Coding by Liuxubo 1911440
-*/
+ *  author: Liuxubo 1911440
+ *  date: 2021/11/24
+ * 
+ *  */
 /* @var $this \yii\web\View */
 /* @var $content string */
 

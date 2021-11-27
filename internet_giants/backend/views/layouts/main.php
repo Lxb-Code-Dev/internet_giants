@@ -1,12 +1,12 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
 /**
  *  author: Liuxubo 1911440
  *  date: 2021/11/24
  * 
  *  */
+/* @var $this \yii\web\View */
+/* @var $content string */
+
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;

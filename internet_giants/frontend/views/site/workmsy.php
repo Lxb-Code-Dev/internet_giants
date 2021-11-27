@@ -1,7 +1,7 @@
 <?php
 /**
-*  Team: Internet_giants
-*  Coding by Liuxubo 1911440, 2021/11/20
+*  Team: Internet_giant
+*  Coding by Liuxubo 1911440, 2021/11/21
 */
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */

@@ -1,14 +1,13 @@
 <?php
 /**
  * Team:Internet-giants, NKU
- * Coding by liuxubo , 2021/11/21
+ * Coding by liuxubo zhaoyilin , 2021/11/21
  * This is the main controller
  */
 
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
+
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -16,10 +15,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 use frontend\models\ArticleForm;
 use frontend\models\MessageForm;
 use  yii\web\Session;
@@ -187,56 +183,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidArgumentException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
-
-   
+  
     
 
     /**
@@ -254,7 +201,7 @@ class SiteController extends Controller
      */
     public function actionWorklxb(){
         $singlework = [
-            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA'],
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/17DyLCl_BGniqwEXDufeNjA'],
         ];
         return $this->render('worklxb', ['singlework' => $singlework]);
     }
@@ -282,16 +229,13 @@ class SiteController extends Controller
      */
     public function actionWorkwwr(){
         $singlework = [
-            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1X4sHfoaDjpLTXyqHZIAzRw'],
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1Gjr95eZ5UrWnh_SXy_HAwg'],
         ];
         return $this->render('workwwr', ['singlework' => $singlework]);
     }
     
 
-    /**
-     * display map
-     */
-   
+  
 
     public function actionArticle()
     {

@@ -1,7 +1,7 @@
 <?php
 /**
-*  Team: TB2020, NKU
-*  Coding by Ke-yuan Chang 1811338, 20200611
+*  Team: Internet_giant
+*  Coding by Liuxubo 1911440, 2021/11/21
 */
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -15,7 +15,7 @@ $this->title = '个人作业';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
-    <h1>赵一林</h1>
+    <h1>赵一林 1910874</h1>
 
 
     <br/>

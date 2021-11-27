@@ -1,4 +1,9 @@
 <?php
+/**
+ *  author: Masiyuan 1911452
+ *  date: 2021/11/24
+ * 
+ *  */
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
