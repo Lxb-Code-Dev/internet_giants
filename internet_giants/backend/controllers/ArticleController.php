@@ -134,7 +134,11 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        
+        $session=Yii::$app->session;
+        if(!$session->get('us_id'))
+        {
+            return $this->goBack();
+        }
         $connection = Yii::$app->db;
         //创建事务
         $transaction = $connection->beginTransaction();

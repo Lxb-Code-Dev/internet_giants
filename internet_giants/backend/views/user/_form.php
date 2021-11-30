@@ -17,11 +17,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'us_id')->textInput(['maxlength' => true,'readonly'=>true]) ?>
-
     <?= $form->field($model, 'us_name')->textInput(['maxlength' => true,'readonly'=>true]) ?>
-
     <?= $form->field($model, 'us_mail')->textInput(['maxlength' => true,'readonly'=>true]) ?>
-
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

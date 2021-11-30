@@ -98,7 +98,6 @@ use frontend\models\IgUserMessage;
 			?>
 			</p>
 			<p style="color:#6F81BD;"><?php 
-			
         	echo $model[$num-2]->us1_content;
 										?></p>
 			<p style="color:#8064A2;"><?php 

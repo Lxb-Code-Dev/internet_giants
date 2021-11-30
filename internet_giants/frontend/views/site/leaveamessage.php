@@ -21,11 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-
-                
-
                 <?= $form->field($model, 'us1_content')->textarea(['rows' => 30]) ?>
-
                 <div class="form-group">
                     <?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'Message-button']) ?>
                 </div>

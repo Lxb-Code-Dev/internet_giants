@@ -65,10 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-
-
 <div class="site-comment">
-
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model1, 'com_content')->textarea(['rows'=>6]) ?>

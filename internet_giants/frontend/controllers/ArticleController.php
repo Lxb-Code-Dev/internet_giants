@@ -69,10 +69,10 @@ class ArticleController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        //更新浏览量
         $mm=$this->findModel($id);
         $mm->art_view_num=$mm->art_view_num+1;
         $mm->save();
-        
         $session = Yii::$app->session;
         $session->open();
         if(!IgUserRead::find()->andWhere(['art_id'=>$this->findModel($id)->art_id, 'us_id'=>$session->get('us_id')])->count())
@@ -82,8 +82,6 @@ class ArticleController extends Controller
             $read->art_id=$this->findModel($id)->art_id;
             $read->save();
         }
-        
-        
         if ($model->load(Yii::$app->request->post()) && $model->leaveamessage($this->findModel($id)) ) {
             $model->com_content='';
        } else {
@@ -93,7 +91,6 @@ class ArticleController extends Controller
                 'dataProvider'=>$dataProvider,
             ]);
        }
-
        return $this->render('view', [
         'model' => $this->findModel($id),
         'model1'=>$model,

@@ -78,7 +78,6 @@ AppAsset::register($this);
 					    <div class="layui-tab-item layui-show" style="background: #f5f5f5;">
 					    	<!--1-->
 					    	<!-- <iframe src="welcome.html" width="100%" height="100%" name="iframe" scrolling="auto" class="iframe" framborder="0"></iframe> -->
-		
 							<?= $content ?>
 							<!--1end-->
 					    </div>

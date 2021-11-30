@@ -192,7 +192,7 @@ class SiteController extends Controller
     public function actionWorkteam(){
         // return $this->render('workteam');
         $workteams = [
-            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1y4e3OyIbPOqMjf13IFKjlA'],
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1z_D9t-hWM3kcZDfD4XYYVw'],
         ];
         return $this->render('workteam', ['workteams' => $workteams]);
     }
@@ -211,7 +211,7 @@ class SiteController extends Controller
      */
     public function actionWorkzyl(){
         $singlework = [
-            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1YzDEqgFUzMgWef76TdKLgQ'],
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1uvAGrdSLn5IBBORRx0VMfA'],
         ];
         return $this->render('workzyl', ['singlework' => $singlework]);
     }
@@ -220,7 +220,7 @@ class SiteController extends Controller
      */
     public function actionWorkmsy(){
         $singlework = [
-            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/15dwGwE7_ADMKwLbVeXV1tA'],
+            ['name' => '作业压缩包链接', 'namecontent' => 'https://pan.baidu.com/s/1NlwnSrqWc1uD23-rzbtphA'],
         ];
         return $this->render('workmsy', ['singlework' => $singlework]);
     }
